@@ -1,0 +1,124 @@
+/* Light theme colors. Dark theme overrides them below. */
+:root {
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --input-border: #d1d5db;
+  --accent: #2563eb;
+  --accent-dark: #1d4ed8;
+  --secondary-bg: #e5e7eb;
+
+  --Applied: #3b82f6;
+  --Interview: #f59e0b;
+  --Offer: #22c55e;
+  --Rejected: #ef4444;
+  --Applied-bg: #dbeafe;   --Applied-text: #1d4ed8;
+  --Interview-bg: #fef3c7; --Interview-text: #b45309;
+  --Offer-bg: #dcfce7;     --Offer-text: #15803d;
+  --Rejected-bg: #fee2e2;  --Rejected-text: #b91c1c;
+}
+
+[data-theme="dark"] {
+  --bg: #111827;
+  --card: #1f2937;
+  --text: #f3f4f6;
+  --muted: #9ca3af;
+  --border: #374151;
+  --input-border: #4b5563;
+  --accent: #3b82f6;
+  --accent-dark: #2563eb;
+  --secondary-bg: #374151;
+
+  --Applied-bg: #1e3a8a;   --Applied-text: #bfdbfe;
+  --Interview-bg: #78350f; --Interview-text: #fde68a;
+  --Offer-bg: #14532d;     --Offer-text: #bbf7d0;
+  --Rejected-bg: #7f1d1d;  --Rejected-text: #fecaca;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+.container { max-width: 760px; margin: 0 auto; padding: 20px 16px; }
+header { display: flex; justify-content: space-between; align-items: center; }
+.email { margin-right: 10px; color: var(--muted); font-size: 14px; }
+.muted { color: var(--muted); font-size: 14px; }
+.center { text-align: center; }
+.error { color: #dc2626; font-size: 14px; }
+.error-box {
+  background: var(--Rejected-bg); color: var(--Rejected-text);
+  padding: 10px 14px; border-radius: 8px; margin: 12px 0;
+}
+.error-box a { color: inherit; margin-left: 8px; font-weight: 600; }
+
+input, select, textarea {
+  width: 100%; padding: 10px; margin-bottom: 10px;
+  border: 1px solid var(--input-border); border-radius: 6px;
+  font: inherit; background: var(--card); color: var(--text);
+}
+textarea { height: 70px; resize: vertical; }
+button {
+  padding: 9px 16px; margin-right: 8px; border: none; border-radius: 6px;
+  background: var(--accent); color: #fff; font: inherit; cursor: pointer;
+}
+button:hover { background: var(--accent-dark); }
+button.secondary { background: var(--secondary-bg); color: var(--text); }
+button.danger { background: var(--Rejected-bg); color: var(--Rejected-text); }
+a { color: var(--accent); }
+
+.card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px; margin-bottom: 14px;
+}
+.card h3 { margin: 0 0 6px; }
+.card p { margin: 4px 0; }
+.row { display: flex; gap: 10px; }
+.filters { display: flex; gap: 10px; }
+
+.counts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0; }
+.count { border-radius: 8px; padding: 10px; text-align: center; border: 1px solid var(--border); }
+.count b { display: block; font-size: 22px; }
+
+.job { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.actions { display: flex; align-items: center; gap: 6px; }
+.actions select, .actions button { margin: 0; width: auto; }
+
+.badge { font-weight: 600; border-radius: 20px; }
+.followup { color: var(--Interview-text); background: var(--Interview-bg); padding: 4px 10px; border-radius: 6px; font-size: 14px; display: inline-block; }
+
+/* status colors, used by badges and count boxes */
+.Applied   { color: var(--Applied-text);   background: var(--Applied-bg); }
+.Interview { color: var(--Interview-text); background: var(--Interview-bg); }
+.Offer     { color: var(--Offer-text);     background: var(--Offer-bg); }
+.Rejected  { color: var(--Rejected-text);  background: var(--Rejected-bg); }
+
+/* donut chart */
+.chart { display: flex; align-items: center; justify-content: center; gap: 30px; }
+.donut { width: 130px; height: 130px; border-radius: 50%; display: grid; place-items: center; }
+.donut-hole {
+  width: 80px; height: 80px; border-radius: 50%; background: var(--card);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.donut-hole b { font-size: 24px; }
+.donut-hole span { font-size: 12px; color: var(--muted); }
+.dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; }
+
+.theme-btn { margin-right: 8px; }
+.top-right { position: fixed; top: 16px; right: 16px; }
+
+.login-box {
+  max-width: 360px; margin: 80px auto; padding: 28px; text-align: center;
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+}
+.login-box button { width: 100%; margin: 0; }
+
+@media (max-width: 560px) {
+  .row { flex-direction: column; gap: 0; }
+  .counts { grid-template-columns: repeat(2, 1fr); }
+  .chart { flex-direction: column; gap: 16px; }
+}
