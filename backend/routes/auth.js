@@ -9,7 +9,7 @@ function makeToken(user) {
   return jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 }
 
-// "  Pragya@Gmail.com " and "pragya@gmail.com" must be the same account
+
 function cleanEmail(email) {
   return String(email || "").trim().toLowerCase();
 }
@@ -26,7 +26,14 @@ router.post("/signup", async (req, res) => {
   if (exists) return res.status(400).json({ message: "Email already registered" });
 
   const hashed = await bcrypt.hash(password, 10); // never store plain passwords
-  const user = await User.create({ email, password: hashed });
+  let user;
+  try {
+    user = await User.create({ email, password: hashed });
+  } catch (err) {
+    // two signups with the same email at the same time: the unique index stops the second one
+    if (err.code === 11000) return res.status(400).json({ message: "Email already registered" });
+    throw err; // anything else goes to the error handler in server.js
+  }
   res.json({ token: makeToken(user), email: user.email });
 });
 
@@ -34,6 +41,9 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
   const email = cleanEmail(req.body.email);
   const { password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ message: "Email and password required" });
+  }
 
   const user = await User.findOne({ email });
   if (!user) return res.status(400).json({ message: "Wrong email or password" });
